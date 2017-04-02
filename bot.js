@@ -1,23 +1,29 @@
+"use strict";
+/**
+* TODO: Optimise using: http://paste2.org/tJEOmns0
+* TODO: Remove lots of repeated code with: http://paste2.org/MHEsg77I
+*/
+
 const Discord = require("discord.js");
 const Pickup = require('./pickup');
 const config = require("./config.json");
 
 const bot = new Discord.Client();
-const pickup = new Pickup({max_teams: config.max_teams, team_size: config.team_size});
+const pickup = new Pickup.Pickup({max_teams: config.max_teams, team_size: config.team_size});
 
 // Small helper things
-function _game_on() {
+const _game_on = function isGameOn() {
   return pickup.game_on;
-}
+};
 
-function _clean(text) {
+const _clean = function cleanText(text) {
   if (typeof(text) === "string")
     return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
   else
       return text;
-}
+};
 
-function _shuffle(array) {
+const _shuffle = function teamShuffle(array) {
   // Fisher-Yates shuffle
   // Taken verbatim from the second answer on this question:
   // http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
@@ -30,7 +36,7 @@ function _shuffle(array) {
         array[index] = temp;
     }
     return array;
-}
+};
 
 bot.on("ready", () => {
   console.log("Bot running...");
@@ -38,12 +44,12 @@ bot.on("ready", () => {
 
 bot.on("message", message => {
 
-  _has_perms = (req_perm) => {
+  const _has_perms = function userHasPerms(req_perm) {
     let required_role = message.guild.roles.find("name", req_perm);
     if (message.member.roles.has(required_role.id)) {
       return true;
     } else return false;
-  }
+  };
 
   if (message.author.bot) return;
   if (!message.content.startsWith(config.prefix)) return;
