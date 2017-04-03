@@ -12,11 +12,11 @@ class Pickup {
     this.game_on = false;
     this.max_teams = settings.max_teams;
     this.team_size = settings.team_size;
-    this.teams = this.reset_teams(this.max_teams, this.team_size);
+    this.teams = this.reset_teams(this.max_teams, this.team_size, this.team_filler);
     this.player_count = 0;
   }
 
-// Helper functions I guess? But not really?
+  // Helper functions I guess? But not really?
    _is_added (nick) {
     /**
     * Checks each element of each array of this.teams and checks
@@ -50,7 +50,7 @@ class Pickup {
     return result;
   }
 
-// Big boy functions
+  // Big boy functions
 
   start_game(max_teams = this.max_teams, team_size = this.team_size) {
     /**
@@ -60,14 +60,14 @@ class Pickup {
     this.game_on = true;
     this.max_teams = max_teams;
     this.team_size = team_size;
-    this.teams = this.reset_teams(this.max_teams, this.team_size);
+    this.teams = this.reset_teams(this.max_teams, this.team_size, this.team_filler);
     return true;
   }
 
   cancel_game() {
     // Cancels a game and resets the teams arrays.
     this.game_on = false;
-    this.reset_teams(this.max_teams, this.team_size); // Redundancy?
+    this.reset_teams(this.max_teams, this.team_size, this.team_filler); // Redundancy?
     this.player_count = 0;
     return true;
   }
@@ -143,24 +143,11 @@ class Pickup {
     }
   }
 
-  reset_teams(width, depth) {
-    /**
-    * Returns a dynamically sized 2-D array (sized based on input)
-    * but makes each element equal to "?" to denote a fresh pickup.
-    * TODO: Perhaps make the 'empty' char configurable?
-    */
-    let arr = [];
-    for (let i = 0; i < width; i++){
-      arr[i] = [];
-    }
-    for (let i = 0; i < width; i++) {
-      for (let j = 0; j < depth; j++) {
-        arr[i][j] = "?"
-      }
-    }
-    this.player_count = 0;
-    return arr;
-  }
+  /**
+  * Returns a dynamically sized 2-D array (sized based on input)
+  * but makes each element equal to "?" to denote a fresh pickup.
+  */
+  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler))
 
   get display_teams() {
     /**

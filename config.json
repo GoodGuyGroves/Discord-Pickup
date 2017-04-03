@@ -2,5 +2,6 @@
   "prefix" : ".",
   "token" : "<redacted>",
   "max_teams" : 2,
-  "team_size" : 6
+  "team_size" : 6,
+  "team_filler" : "?"
 }
