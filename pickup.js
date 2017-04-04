@@ -147,7 +147,7 @@ class Pickup {
   * Returns a dynamically sized 2-D array (sized based on input)
   * but makes each element equal to "?" to denote a fresh pickup.
   */
-  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler))
+  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler));
 
   get display_teams() {
     /**
