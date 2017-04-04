@@ -67,7 +67,7 @@ class Pickup {
   cancel_game() {
     // Cancels a game and resets the teams arrays.
     this.game_on = false;
-    this.reset_teams(this.max_teams, this.team_size, this.team_filler); // Redundancy?
+    this.teams = this.reset_teams(this.max_teams, this.team_size, this.team_filler); // Redundancy?
     this.player_count = 0;
     return true;
   }
@@ -147,7 +147,7 @@ class Pickup {
   * Returns a dynamically sized 2-D array (sized based on input)
   * but makes each element equal to "?" to denote a fresh pickup.
   */
-  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler))
+  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler));
 
   get display_teams() {
     /**
@@ -158,10 +158,11 @@ class Pickup {
     let alphabet = ["A", "B", "C", "D", "E", "F", "G" ,"H", "I",
     "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
     "V", "W", "X", "Y", "Z"];
+    let fence = '\`\`\`'
     let teams = "";
     for (let i = 0; i < this.teams.length; i++) {
       // TODO: Style Guide says I should try remove these backslashes?
-      teams += `\`\`\`Team ${alphabet[i]}: (${this.teams[i].join("), (")}) \`\`\``
+      teams += `${fence}Team ${alphabet[i]}: (${this.teams[i].join("), (")})${fence}`
     }
     return teams;
   }
