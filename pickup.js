@@ -17,7 +17,7 @@ class Pickup {
   }
 
   // Helper functions I guess? But not really?
-   _is_added (nick) {
+   isAdded(nick) {
     /**
     * Checks each element of each array of this.teams and checks
     * if it is the same as the nickname given.
@@ -79,7 +79,7 @@ class Pickup {
     * and true if added successfully.
     * My returns are weird but they are exactly that, MY returns.
     */
-    if (!this._is_added(nick)) {
+    if (!this.isAdded(nick)) {
       if (this._open_spot(team) != -1) {
         this.teams[team][this._open_spot(team)] = nick;
         this.teams[team] = this._sort_arr(this.teams[team]);
@@ -90,7 +90,7 @@ class Pickup {
         return 0;
       }
     } else
-    if (this._is_added(nick)) {
+    if (this.isAdded(nick)) {
       return false;
     }
   }
@@ -124,7 +124,7 @@ class Pickup {
 
   remove(nick) {
     // Removes a player from any team. Returns true or false.
-    if (this._is_added(nick)) {
+    if (this.isAdded(nick)) {
       for (let i = 0; i < this.teams.length; i++) {
         for (let j = 0; j < this.teams[i].length; j++) {
           if (this.teams[i][j] == nick) {
@@ -138,7 +138,7 @@ class Pickup {
       console.log("Hello, why did I get this far?");
       return false;
     } else
-    if (!this._is_added(nick)) {
+    if (!this.isAdded(nick)) {
       return false;
     }
   }
@@ -147,7 +147,7 @@ class Pickup {
   * Returns a dynamically sized 2-D array (sized based on input)
   * but makes each element equal to "?" to denote a fresh pickup.
   */
-  reset_teams = (width, depth, filler) => new Array(width).fill(new Array(depth).fill(filler));
+  reset_teams = (width, depth, filler) => new Array(width).fill(undefined).map(() => new Array(depth).fill(filler));
 
   get display_teams() {
     /**
@@ -161,7 +161,6 @@ class Pickup {
     let fence = '\`\`\`'
     let teams = "";
     for (let i = 0; i < this.teams.length; i++) {
-      // TODO: Style Guide says I should try remove these backslashes?
       teams += `${fence}Team ${alphabet[i]}: (${this.teams[i].join("), (")})${fence}`
     }
     return teams;
