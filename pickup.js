@@ -123,23 +123,13 @@ class Pickup {
   }
 
   remove(nick) {
-    // Removes a player from any team. Returns true or false.
-    if (this.isAdded(nick)) {
-      for (let i = 0; i < this.teams.length; i++) {
-        for (let j = 0; j < this.teams[i].length; j++) {
-          if (this.teams[i][j] == nick) {
-            this.teams[i][j] = "?";
-            this.teams[i] = this._sort_arr(this.teams[i]);
-            this.player_count -= 1;
-            return true
-          }
-        }
-      }
-      console.log("Hello, why did I get this far?");
-      return false;
-    } else
-    if (!this.isAdded(nick)) {
-      return false;
+    // Removes a player from any team. Returns a new 2D array
+    if (isAdded(nick)) {
+      return arr.map((x) => {
+        return x.map((y) => {
+          return y === nick ? '?' : y
+        })
+      })
     }
   }
 

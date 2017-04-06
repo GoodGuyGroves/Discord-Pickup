@@ -119,7 +119,7 @@ bot.on("message", message => {
     "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     if (_game_on()) {
     //   message.reply(`Usage: "${config.prefix}add ([1|a])" - Specifying a team is optional and can be specified by number or character.`);
-      if (!pickup._is_added(user)) {
+      if (!pickup.isAdded(user)) {
         if (args.length > 0) {
           if (isNaN(parseInt(args[0]))) {
             args[0] = alphabet.indexOf(args[0]);
@@ -154,8 +154,8 @@ bot.on("message", message => {
 
   if (cmd == "rm" || cmd == "rem" || cmd == "remove") {
     if (_game_on()) {
-      if (pickup._is_added(user)) {
-        pickup.remove(user);
+      if (pickup.isAdded(user)) {
+        pickup.teams = pickup.remove(user);
         message.channel.sendMessage(pickup.display_teams);
       } else {
         message.reply("You are not added to the game.");
@@ -206,8 +206,8 @@ bot.on("message", message => {
   if (cmd == "fr" || cmd == "forceremove") {
     if (_game_on()) {
       if (_has_perms("@")) {
-        if (pickup._is_added(args[0])) {
-          pickup.remove(args[0]);
+        if (pickup.isAdded(args[0])) {
+          pickup.teams = pickup.remove(args[0]);
           return message.channel.sendMessage(pickup.display_teams);
         } else {
           return message.reply("Player not added to the pickup.");
