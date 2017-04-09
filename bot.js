@@ -9,7 +9,7 @@ const Pickup = require('./pickup');
 const config = require("./config.json");
 
 const bot = new Discord.Client();
-const pickup = new Pickup.Pickup({max_teams: config.max_teams, team_size: config.team_size, config.team_filler});
+const pickup = new Pickup.Pickup({max_teams: config.max_teams, team_size: config.team_size, team_filler: config.team_filler});
 
 // Small helper things
 const _game_on = function isGameOn() {

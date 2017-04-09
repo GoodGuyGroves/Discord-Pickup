@@ -12,6 +12,7 @@ class Pickup {
     this.game_on = false;
     this.max_teams = settings.max_teams;
     this.team_size = settings.team_size;
+    this.team_filler = settings.team_filler;
     this.teams = this.reset_teams(this.max_teams, this.team_size, this.team_filler);
     this.player_count = 0;
   }
@@ -137,7 +138,11 @@ class Pickup {
   * Returns a dynamically sized 2-D array (sized based on input)
   * but makes each element equal to "?" to denote a fresh pickup.
   */
-  reset_teams = (width, depth, filler) => new Array(width).fill(undefined).map(() => new Array(depth).fill(filler));
+  reset_teams(width, depth, filler) {
+    let teams = new Array(width).fill(undefined).map(() => new Array(depth).fill(filler));
+    console.log(teams)
+    return teams
+  }
 
   get display_teams() {
     /**
@@ -153,6 +158,7 @@ class Pickup {
     for (let i = 0; i < this.teams.length; i++) {
       teams += `${fence}Team ${alphabet[i]}: (${this.teams[i].join("), (")})${fence}`
     }
+    console.log(this.teams)
     return teams;
   }
 };
